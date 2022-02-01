@@ -19,7 +19,7 @@ public:
     long long quary(int pos);
     long long quary(int l, int r);
 private:
-    inline int lowbit(int x) {
+    int lowbit(int x) {
         return x & (-x);
     }
     int size = 0;

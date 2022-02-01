@@ -20,7 +20,7 @@ public:
     long long query(int pos);
     long long query_interval(int l, int r);
 private:
-    inline int lowbit(int x) {
+    int lowbit(int x) {
         return x & (-x);
     }
     int size;
