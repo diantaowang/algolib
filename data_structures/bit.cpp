@@ -16,38 +16,38 @@ public:
     BIT(vector<long long> &arr);
     BIT(const int n);
     void update(int pos, long long val);
-    long long quary(int pos);
-    long long quary(int l, int r);
+    long long query(int pos);
+    long long query(int l, int r);
 private:
     inline int lowbit(int x) {
         return x & (-x);
     }
-    int size = 0;
-    vector<long long> sums;
+    vector<long long> sums, nums;
 };
 
 BIT::BIT(vector<long long> &arr) {
-    size = arr.size() + 1;
-    sums.resize(size);
-    fill(sums.begin(), sums.end(), 0);
+    nums.resize(arr.size(), 0);
+    sums.resize(arr.size() + 1, 0);
+    int size = sums.size();
     for (int i = 1; i < size; ++i) {
-        update(i, arr[i - 1]);
+        update(i, nums[i - 1]);
     }
 }
 
 BIT::BIT(const int n) {
-    size = n + 1;
-    sums.resize(size);
-    fill(sums.begin(), sums.end(), 0);
+    nums.resize(n, 0);
+    sums.resize(n + 1, 0);
 }
 
 void BIT::update(int pos, long long val) {
+    int size = sums.size(), diff = val - nums[pos - 1];
     for (int i = pos; i < size; i += lowbit(i)) {
-        sums[i] += val;
+        sums[i] += diff;
     }
+    nums[pos - 1] = val;
 }
 
-long long BIT::quary(int pos) {
+long long BIT::query(int pos) {
     long long ret = 0;
     for (int i = pos; i > 0; i -= lowbit(i)) {
         ret += sums[i];
@@ -55,6 +55,7 @@ long long BIT::quary(int pos) {
     return ret;
 }
 
-long long BIT::quary(int l, int r) {
-    return quary(r) - quary(l - 1);
+long long BIT::query(int l, int r) {
+    return query(r) - query(l - 1);
 }
+
