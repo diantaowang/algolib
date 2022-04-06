@@ -19,7 +19,7 @@ public:
     long long query(int pos);
     long long query(int l, int r);
 private:
-    inline int lowbit(int x) {
+    int lowbit(int x) {
         return x & (-x);
     }
     vector<long long> sums, nums;
