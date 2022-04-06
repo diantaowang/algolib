@@ -1,10 +1,10 @@
 //
-// Created by wdiantao on 2022/1/16.
+// Created by wdiantao on 2022/04/06.
 //
 
 #include <bits/stdc++.h>
 
-using namespace::std;
+using namespace std;
 
 /*
  * Description: Implementation of Binary Index Tree (BIT).
@@ -13,34 +13,40 @@ using namespace::std;
 
 class BIT {
 public:
+    BIT() = default;
     BIT(vector<long long> &arr);
-    BIT(const int n);
+    BIT(int n);
     void update(int pos, long long val);
     long long query(int pos);
     long long query(int l, int r);
+    void init(vector<long long> &arr);
 private:
-    int lowbit(int x) {
+    inline static int lowbit(int x) {
         return x & (-x);
     }
     vector<long long> sums, nums;
 };
 
-BIT::BIT(vector<long long> &arr) {
+void BIT::init(vector<long long> &arr) {
     nums.resize(arr.size(), 0);
     sums.resize(arr.size() + 1, 0);
-    int size = sums.size();
+    int size = (int) sums.size();
     for (int i = 1; i < size; ++i) {
-        update(i, nums[i - 1]);
+        update(i, arr[i - 1]);
     }
 }
 
+BIT::BIT(vector<long long> &arr) {
+    init(arr);
+}
+
 BIT::BIT(const int n) {
-    nums.resize(n, 0);
-    sums.resize(n + 1, 0);
+    nums.resize(nums.size(), 0);
+    sums.resize(nums.size() + 1, 0);
 }
 
 void BIT::update(int pos, long long val) {
-    int size = sums.size(), diff = val - nums[pos - 1];
+    int size = (int) sums.size(), diff = val - nums[pos - 1];
     for (int i = pos; i < size; i += lowbit(i)) {
         sums[i] += diff;
     }
@@ -58,4 +64,3 @@ long long BIT::query(int pos) {
 long long BIT::query(int l, int r) {
     return query(r) - query(l - 1);
 }
-
