@@ -41,8 +41,8 @@ BIT::BIT(vector<long long> &arr) {
 }
 
 BIT::BIT(const int n) {
-    nums.resize(nums.size(), 0);
-    sums.resize(nums.size() + 1, 0);
+    nums.resize(n, 0);
+    sums.resize(n + 1, 0);
 }
 
 void BIT::update(int pos, long long val) {
